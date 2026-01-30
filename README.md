@@ -81,5 +81,5 @@ Currently, the UPI ID is set to `yourupi@bank.com`. To change this to your own m
 ## 📝 License
 Copyright (c) 2026 SweetSync-POS SYSTEM. All Rights Reserved.
 
-This software is the confidential and proprietary information of Priyanka's Cake Shop.
+This software is the confidential and proprietary information of Aarav Kumar.
 Unauthorized copying of this file, via any medium is strictly prohibited.
