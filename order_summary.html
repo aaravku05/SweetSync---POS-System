@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">Order Summary</h1>
+    <div class="card my-5">
+        <div class="card-body">
+            <h5 class="card-title">Customer Name: {{ customer_name }}</h5>
+            <p class="card-text">Plot Number: {{ plot_number }}</p>
+            <p class="card-text">Total Cost: ₹{{ total_cost }}</p>
+            <h6>Selected Items:</h6>
+            <ul>
+                {% for item, quantity in zipped_items %}
+                <li>{{ item[0] }} - ₹{{ item[1] }} x {{ quantity }}</li>
+                {% endfor %}
+            </ul>
+            <h6>Scan this QR code to pay:</h6>
+            <img src="data:image/png;base64,{{ qr_base64 }}" alt="UPI QR Code">
+        </div>
+    </div>
+
+    <a href="/next_order" class="btn btn-primary">Next Order</a>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Summary on Phone</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.socket.io/4.1.2/socket.io.min.js"></script>
+    <style>
+        .qr-code {
+            width: 150px;
+            height: 150px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1>Order Summary</h1>
+    <div id="order-details">
+        <!-- Order details will be displayed here dynamically -->
+    </div>
+</div>
+
+<script>
+    var socket = io.connect(window.location.origin);
+
+    socket.on('order_summary', function(data) {
+        let orderDetails = `<div class="card my-3"><div class="card-body">`;
+        orderDetails += `<h3>Customer: ${data.customer_name}</h3>`;
+        orderDetails += `<p>Plot Number: ${data.plot_number}</p>`;
+        orderDetails += `<p>Original Cost: ₹${data.total_cost}</p>`;
+        orderDetails += `<h4>Items:</h4><ul>`;
+        data.items.forEach((item, index) => {
+            orderDetails += `<li>${item.name} - ₹${item.cost} x${data.quantities[index]}</li>`;
+        });
+        orderDetails += `</ul>`;
+        orderDetails += `<h4>Scan this QR code to pay:</h4>`;
+        orderDetails += `<img src="data:image/png;base64,${data.qr_code}" alt="UPI QR Code" class="qr-code">`;
+        orderDetails += `</div></div>`;
+        document.getElementById('order-details').innerHTML = orderDetails;
+    });
+
+    socket.on('reset_order', function() {
+        document.getElementById('order-details').innerHTML = '';
+    });
+</script>
+</body>
+</html>
